@@ -126,7 +126,11 @@ export type Database = {
 				Row: {
 					bottles: number | null;
 					location_id: number | null;
+					location_name: string | null;
+					vintage: number | null;
 					wine_id: number | null;
+					wine_name: string | null;
+					wine_type: string | null;
 				};
 				Relationships: [];
 			};
