@@ -13,11 +13,11 @@ export function StockList() {
 	const [state, setState] = useState<WinesState>({ status: "loading" });
 
 	useEffect(() => {
+		let ignore = false;
+
 		async function load() {
-			const { data, error } = await supabase
-				.from("wine_stock")
-				.select()
-				.limit(0);
+			const { data, error } = await supabase.from("wine_stock").select();
+			if (ignore) return;
 			if (error) {
 				setState({
 					status: "error",
@@ -29,6 +29,9 @@ export function StockList() {
 			}
 		}
 		load();
+		return () => {
+			ignore = true;
+		};
 	}, []);
 
 	switch (state.status) {
