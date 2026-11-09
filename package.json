@@ -10,6 +10,7 @@
 		"format": "biome check --write ."
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.109.0",
 		"next": "16.4.5",
 		"react": "19.3.0",
 		"react-dom": "19.3.0"
