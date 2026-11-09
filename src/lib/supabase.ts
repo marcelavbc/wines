@@ -1,14 +1,19 @@
 import { createClient } from "@supabase/supabase-js";
 
-function getEnvVar(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Falta ${name} en .env.local`);
-  }
-  return value;
+function requireEnv(value: string | undefined, name: string): string {
+	if (!value) {
+		throw new Error(`Falta ${name} en .env.local`);
+	}
+	return value;
 }
 
-const supabaseUrl = getEnvVar("NEXT_PUBLIC_SUPABASE_URL");
-const supabaseKey = getEnvVar("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
+const supabaseUrl = requireEnv(
+	process.env.NEXT_PUBLIC_SUPABASE_URL,
+	"NEXT_PUBLIC_SUPABASE_URL",
+);
+const supabaseKey = requireEnv(
+	process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+	"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+);
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
