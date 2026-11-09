@@ -14,7 +14,10 @@ export function StockList() {
 
 	useEffect(() => {
 		async function load() {
-			const { data, error } = await supabase.from("wine_stock").select();
+			const { data, error } = await supabase
+				.from("wine_stock")
+				.select()
+				.limit(0);
 			if (error) {
 				setState({
 					status: "error",
@@ -34,6 +37,9 @@ export function StockList() {
 		case "error":
 			return <p>Error: {state.message}</p>;
 		case "success":
+			if (state.wines.length === 0) {
+				return <p>Tu bodega está vacía. Añade tu primera botella.</p>;
+			}
 			return (
 				<ul>
 					{state.wines.map((stock) => (
