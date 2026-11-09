@@ -16,7 +16,11 @@ export function StockList() {
 		async function load() {
 			const { data, error } = await supabase.from("wine_stock").select();
 			if (error) {
-				setState({ status: "error", message: error.message });
+				setState({
+					status: "error",
+					message: "No ha sido posible cargar los vinos. Inténtalo más tarde",
+				});
+				console.error(error);
 			} else {
 				setState({ status: "success", wines: data });
 			}
