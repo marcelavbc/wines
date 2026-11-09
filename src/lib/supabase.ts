@@ -17,4 +17,4 @@ const supabaseKey = requireEnv(
 	"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
 );
 
-export const supabase = createClient<Database>(supabaseUrl, supabaseKey); // ← cambia
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
