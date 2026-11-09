@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Database } from "./database.types";
 
 function requireEnv(value: string | undefined, name: string): string {
 	if (!value) {
@@ -16,4 +17,4 @@ const supabaseKey = requireEnv(
 	"NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
 );
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient<Database>(supabaseUrl, supabaseKey); // ← cambia

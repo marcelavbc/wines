@@ -1,9 +1,7 @@
-import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
-export default function Home() {
-	return (
-		<main>
-			<h1>Mi Bodega</h1>
-		</main>
-	);
+export default async function Home() {
+  const { data, error } = await supabase.from("wine_stock").select();
+  console.log(data, error);
+  return "Mi Bodega";
 }
