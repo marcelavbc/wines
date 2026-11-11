@@ -48,7 +48,7 @@ export function StockList() {
 					{state.wines.map((stock) => (
 						<li
 							key={`wine-${stock.wine_id}-${stock.location_id}`}
-						>{`${stock.wine_name} - ${stock.location_name}, ${stock.bottles} botellas`}</li>
+						>{`${stock.wine_name} - ${stock.bottles} botellas`}</li>
 					))}
 				</ul>
 			);
