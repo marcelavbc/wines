@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import type { Tables } from "@/lib/database.types";
 import { supabase } from "@/lib/supabase";
-import { WINE_TYPES, type WineType } from "@/lib/wine-types";
+import { WINE_TYPE_LABELS, WINE_TYPES, type WineType } from "@/lib/wine-types";
 
 type WineStock = Tables<"wine_stock">;
 type WinesState =
@@ -62,7 +62,7 @@ export function StockList() {
 						<option value="">Todos</option>
 						{WINE_TYPES.map((type) => (
 							<option key={type} value={type}>
-								{type}
+								{WINE_TYPE_LABELS[type]}
 							</option>
 						))}
 					</select>
