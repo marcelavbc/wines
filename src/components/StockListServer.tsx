@@ -1,6 +1,8 @@
+import Form from "next/form";
 import { Props } from "@/app/server/page";
 import { supabase } from "@/lib/supabase";
-import { WINE_TYPE_LABELS, WINE_TYPES } from "@/lib/wine-types";
+import { WINE_TYPES } from "@/lib/wine-types";
+import WineTypeSelect from "./WineTypeSelect";
 
 export default async function StockListServer({ searchParams }: Props) {
 	const params = await searchParams;
@@ -19,7 +21,7 @@ export default async function StockListServer({ searchParams }: Props) {
 	return (
 		<div>
 			{error && <p>Error: {error.message}</p>}
-			<form>
+			<Form action="/server">
 				<input
 					type="text"
 					name="q"
@@ -27,15 +29,9 @@ export default async function StockListServer({ searchParams }: Props) {
 					defaultValue={search}
 				/>
 				<button type="submit">Search</button>
-				<select name="type" defaultValue={wineType ?? ""}>
-					<option value="">Todos</option>
-					{WINE_TYPES.map((type) => (
-						<option key={type} value={type}>
-							{WINE_TYPE_LABELS[type]}
-						</option>
-					))}
-				</select>
-			</form>
+				<WineTypeSelect defaultValue={wineType} />
+			</Form>
+
 			{data && (
 				<ul>
 					{data.map((stock) => (
