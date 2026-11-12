@@ -18,14 +18,15 @@ export function StockList() {
 	const debouncedQuery = useDebounce(searchQuery, 400);
 
 	useEffect(() => {
-		let ignore = false;
+		const controller = new AbortController();
 
 		async function load() {
 			const { data, error } = await supabase
 				.from("wine_stock")
 				.select()
-				.ilike("wine_name", `%${debouncedQuery}%`);
-			if (ignore) return;
+				.ilike("wine_name", `%${debouncedQuery}%`)
+				.abortSignal(controller.signal);
+			if (controller.signal.aborted) return;
 			if (error) {
 				setState({
 					status: "error",
@@ -38,9 +39,10 @@ export function StockList() {
 		}
 		load();
 		return () => {
-			ignore = true;
+			controller.abort();
 		};
 	}, [debouncedQuery]);
+
 	function renderResults() {
 		switch (state.status) {
 			case "loading":
@@ -53,7 +55,7 @@ export function StockList() {
 					: state.wines;
 
 				if (state.wines.length === 0) {
-					return debouncedQuery !== "" ? (
+					return state.query !== "" ? (
 						<p>No hay vinos que coincidan con tu búsqueda.</p>
 					) : (
 						<p>Tu bodega está vacía. Añade tu primera botella.</p>
@@ -86,7 +88,6 @@ export function StockList() {
 				value={searchQuery}
 				onChange={(e) => setSearchQuery(e.target.value)}
 			/>
-			{searchQuery && <p>Buscando: "{searchQuery}"</p>}
 			<select
 				value={selectedType ?? ""}
 				onChange={(e) =>
