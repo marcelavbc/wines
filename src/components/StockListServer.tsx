@@ -1,10 +1,12 @@
 import Form from "next/form";
-import { Props } from "@/app/server/page";
 import { supabase } from "@/lib/supabase";
 import { WINE_TYPES } from "@/lib/wine-types";
+import type { SearchParamsProps } from "@/types/search-params";
 import WineTypeSelect from "./WineTypeSelect";
 
-export default async function StockListServer({ searchParams }: Props) {
+export default async function StockListServer({
+	searchParams,
+}: SearchParamsProps) {
 	const params = await searchParams;
 
 	const search = Array.isArray(params.q) ? params.q[0] : params.q;
@@ -21,7 +23,7 @@ export default async function StockListServer({ searchParams }: Props) {
 	return (
 		<div>
 			{error && <p>Error: {error.message}</p>}
-			<Form action="/server">
+			<Form action="/">
 				<input
 					type="text"
 					name="q"
